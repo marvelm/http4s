@@ -26,8 +26,8 @@ object EntityLimiter {
     receive1(go(0,_))
   }
 
-  def comsumeUpTo(n: Int): Process1[ByteVector, ByteVector] = {
-    val p = process1.fold[ByteVector, ByteVector](ByteVector.empty) { (c1, c2) => c1 ++ c2 }
+  def consumeUpTo(n: Int): Process1[ByteVector, ByteVector] = {
+    val p = process1.reduce[ByteVector](_ ++ _)
     takeBytes(n) |> p
   }
 
